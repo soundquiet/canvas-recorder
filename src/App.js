@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SaveVideo from './saveVideo';
+import RecorderView from './RevcorderView';
 import './App.css';
 // import mp3_file from './vincent.mp3';
 
@@ -80,15 +80,12 @@ export default class App extends Component{
                     click 'interrupt' to interrupt the ongoing recording.
                 </p>
                 {/* <audio id='audio' src={mp3_file} controls> </audio> */}
-                <canvas id='canvas'>
-                </canvas>
-                <SaveVideo id='saveBtn' 
-                    canvas='canvas'
-                    timeSlice = {this.state.timeSlice}
+                <canvas id='canvas' />
+				
+                <RecorderView
+                    canvasId='canvas'
                     duration={this.state.duration}
-                    draw={this.draw}>
-                    save    
-                </SaveVideo>
+                />
             </div>
             
         )
