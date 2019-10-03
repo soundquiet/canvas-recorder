@@ -15,7 +15,13 @@ export default class RecorderView extends Component {
     startRecoder() {
         let {canvasId, duration} = this.props;
         //TODO: start recorder
-        recorder.start(canvasId, duration);
+        recorder.start(canvasId, duration)
+                .then(function(video) {
+                    //TODO: deal with the video
+                })
+                .catch(function(error) {
+                    //TODO: deal with the error
+                });
     }
 
     stopRecorder() {

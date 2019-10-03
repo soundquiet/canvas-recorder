@@ -11,9 +11,22 @@ export default class Recorder {
 
     start(canvasId, duration) {
         if (this.isRecording) {
-            return;
+            return new Promise((resolve, reject) => {
+                let error = 'is recording';
+                reject(new Error(error));
+            })
         } else {
-            //TODO: start recording
+            return new Promise((resolve, reject) => {
+                //TODO: start recording
+                let success = true;
+                if (success) {
+                    let video = ''; // video to save
+                    resolve(video);
+                } else {
+                    let error = 'something wrong!';
+                    reject(new Error(error));
+                }
+            })
         }
     }
 
