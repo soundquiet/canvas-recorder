@@ -14,7 +14,9 @@ export default class RecorderView extends Component {
 
     startRecoder() {
         let {canvasId, duration, timeSlice, playCanvas} = this.props;
-        recorder.start(canvasId, duration, timeSlice, playCanvas)
+        // playCanvas();
+        setTimeout(() => {
+            recorder.start(canvasId, duration, timeSlice, playCanvas)
                 .then(function(video) {
                     var url = URL.createObjectURL(new Blob(video, { type: "video/webm" }));
                     const link = document.createElement('a');
@@ -31,6 +33,24 @@ export default class RecorderView extends Component {
                     //TODO: deal with the error
                     console.log(error);
                 });
+        }, 2000);
+        // recorder.start(canvasId, duration, timeSlice, playCanvas)
+        //         .then(function(video) {
+        //             var url = URL.createObjectURL(new Blob(video, { type: "video/webm" }));
+        //             const link = document.createElement('a');
+        //             link.style.display = 'none';
+        //             link.href = url;
+        //             link.download = 'media.mp4';
+        //             document.body.appendChild(link);
+        //             link.click();
+        //             link.remove();
+        //         },function(error) {
+        //             console.log(error);
+        //         })
+        //         .catch(function(error) {
+        //             //TODO: deal with the error
+        //             console.log(error);
+        //         });
     }
 
     stopRecorder() {

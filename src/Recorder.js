@@ -24,24 +24,28 @@ export default class Recorder {
 
                 var canvas = document.getElementById(canvasId);
                 var stream = canvas.captureStream();
+                // var anotherCanvas = document.getElementById('another');
+                // var anotherTracks = anotherCanvas.captureStream();
+                // stream.addTrack(anotherTracks);
                 var videoData = [];
                 var recorder = new MediaRecorder(stream, { mimeType: "video/webm"});
 
                 this.recorder = recorder;
 
                 recorder.onstart = () => {
-                    console.log("start")
-                    // 播放视频
+                    console.log("start");
                     playCanvas();
+                    // 播放视频
+                    // playCanvas();
                     // 根据时间停止录制
                     this.recorder_timeout = setTimeout(() => {
                         this.isCompleted = true;
                         recorder.stop(); 
-                    }, duration + 1000);
+                    }, duration);
                 }
 
                 recorder.ondataavailable = function(event) {
-                    console.log("recording");
+                    console.log(event.data.size);
                     videoData.push(event.data);   
                 }
 
@@ -63,7 +67,29 @@ export default class Recorder {
                     this.isRecording = false;
                     this.isCompleted = false;
                 }
-                recorder.start(timeSlice);
+
+                recorder.onerror = (event) => {
+                    let error = event.error;
+                    // reject(error);
+
+                    switch(error.name) {
+                        case 'InvalidStateError':
+                            alert("You can't record the video right " +
+                                            "now. Try again later.");
+                            break;
+                        case 'SecurityError':
+                            alert("Recording the specified source " +
+                                            "is not allowed due to security " +
+                                            "restrictions.");
+                            break;
+                        default:
+                            alert("A problem occurred while trying " +
+                                            "to record the video.");
+                            break;
+                    }
+                }
+
+                recorder.start(10);
                 // let success = this.isCompleted;
                 // if (success) {
                 //     let video = this.videoData; // video to save
